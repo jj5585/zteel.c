@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zteeel — Investor Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=IBM+Plex+Mono:wght@400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0e0e0e;
+  --paper: #f4f0e8;
+  --paper-dark: #ece8de;
+  --orange: #E84A00;
+  --orange-light: rgba(232,74,0,0.08);
+  --rule: rgba(14,14,14,0.12);
+  --muted: rgba(14,14,14,0.45);
+  --mono: 'IBM Plex Mono', monospace;
+  --serif: 'Playfair Display', serif;
+  --sans: 'Epilogue', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* subtle paper texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 56px;
+  height: 60px;
+  border-bottom: 1px solid var(--rule);
+  background: rgba(244,240,232,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.logo {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.logo-dot { color: var(--orange); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-links a {
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--ink); }
+
+.nav-contact {
+  font-family: var(--mono);
+  font-size: 0.75rem !important;
+  color: var(--orange) !important;
+  border: 1px solid var(--orange) !important;
+  padding: 7px 16px;
+  transition: background 0.2s, color 0.2s !important;
+}
+
+.nav-contact:hover {
+  background: var(--orange) !important;
+  color: #fff !important;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 160px 56px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  border-left: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: slideIn 0.5s 0.1s ease forwards;
+}
+
+.eyebrow-line {
+  width: 40px;
+  height: 1px;
+  background: var(--orange);
+}
+
+.eyebrow-text {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+h1 {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: clamp(3.5rem, 7vw, 6.5rem);
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  max-width: 800px;
+  opacity: 0;
+  animation: slideIn 0.6s 0.2s ease forwards;
+}
+
+h1 em {
+  font-style: italic;
+  color: var(--orange);
+}
+
+.hero-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  margin-top: 56px;
+  align-items: end;
+  opacity: 0;
+  animation: slideIn 0.6s 0.35s ease forwards;
+}
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 420px;
+  font-weight: 300;
+}
+
+.hero-desc strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.hero-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+
+.metric {
+  background: var(--paper);
+  padding: 24px 20px;
+  transition: background 0.2s;
+}
+
+.metric:hover { background: var(--orange-light); }
+
+.metric-val {
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.metric-val span { color: var(--orange); }
+
+.metric-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 6px;
+  font-family: var(--mono);
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── FULL-WIDTH RULE ── */
+.full-rule {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 0;
+}
+
+/* ── SECTION ── */
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 56px;
+  border-left: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+  position: relative;
+  z-index: 1;
+}
+
+.section-header {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 48px;
+  align-items: start;
+  margin-bottom: 56px;
+}
+
+.section-num {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orange);
+  padding-top: 6px;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.section-title em { font-style: italic; color: var(--orange); }
+
+/* ── PROBLEM ── */
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid var(--rule);
+}
+
+.problem-item {
+  padding: 36px 28px;
+  border-right: 1px solid var(--rule);
+  position: relative;
+}
+
+.problem-item:last-child { border-right: none; }
+
+.problem-num {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+}
+
+.problem-item h3 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+
+.problem-item p {
+  font-size: 0.87rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ── OPPORTUNITY CALLOUT ── */
+.callout {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 56px;
+  margin-top: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.callout-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.callout h2 {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.callout h2 em { font-style: italic; color: var(--orange); }
+
+.callout-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.callout-stat {
+  padding: 24px 28px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+}
+
+.callout-stat:last-child { border-bottom: none; }
+
+.callout-stat-val {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--orange);
+  flex-shrink: 0;
+}
+
+.callout-stat-label {
+  font-size: 0.85rem;
+  color: rgba(244,240,232,0.5);
+  text-align: right;
+  line-height: 1.4;
+}
+
+/* ── TRACTION ── */
+.traction-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+
+.traction-cell {
+  background: var(--paper);
+  padding: 40px 32px;
+  transition: background 0.25s;
+}
+
+.traction-cell:hover { background: var(--orange-light); }
+
+.traction-big {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: 3.5rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--orange);
+}
+
+.traction-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 8px 0 12px;
+}
+
+.traction-desc {
+  font-size: 0.87rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── BUSINESS MODEL ── */
+.model-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+
+.model-main {
+  background: var(--paper);
+  padding: 48px 40px;
+}
+
+.model-main .price {
+  font-family: var(--serif);
+  font-size: 4rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ink);
+  margin: 16px 0 8px;
+}
+
+.model-main .price span { color: var(--orange); font-size: 1.5rem; }
+
+.model-main p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  max-width: 320px;
+  line-height: 1.65;
+}
+
+.model-aside {
+  background: var(--paper-dark);
+  padding: 48px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.model-aside h4 {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.stream {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.stream:last-child { border-bottom: none; }
+
+.stream-arrow {
+  color: var(--orange);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.stream-body strong {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.stream-body p {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* ── WHY NOW ── */
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+
+.why-item {
+  background: var(--paper);
+  padding: 36px 32px;
+  transition: background 0.2s;
+}
+
+.why-item:hover { background: var(--orange-light); }
+
+.why-tag {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 12px;
+}
+
+.why-item h3 {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.why-item p {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ── COMPETITIVE MOAT ── */
+.moat-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.moat-table thead tr {
+  border-bottom: 2px solid var(--ink);
+}
+
+.moat-table th {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 14px 20px;
+  text-align: left;
+  font-weight: 400;
+}
+
+.moat-table th:first-child { padding-left: 0; }
+
+.moat-table tbody tr {
+  border-bottom: 1px solid var(--rule);
+  transition: background 0.15s;
+}
+
+.moat-table tbody tr:hover { background: var(--orange-light); }
+
+.moat-table td {
+  padding: 16px 20px;
+  vertical-align: middle;
+}
+
+.moat-table td:first-child {
+  font-weight: 500;
+  padding-left: 0;
+}
+
+.moat-table td.ours {
+  color: var(--orange);
+  font-weight: 500;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+
+.moat-table td.theirs {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+
+/* ── ASK ── */
+.ask-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+
+.ask-item {
+  background: var(--paper);
+  padding: 40px 36px;
+}
+
+.ask-item h3 {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.ask-item p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* ── FOUNDER ── */
+.founder-section {
+  background: var(--paper-dark);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.founder-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 56px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 80px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.founder-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.founder-name {
+  font-family: var(--serif);
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.founder-title {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--orange);
+  letter-spacing: 0.05em;
+}
+
+.founder-bio {
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 560px;
+}
+
+.founder-bio strong { color: var(--ink); font-weight: 500; }
+
+.competencies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.chip {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  padding: 5px 12px;
+  border: 1px solid var(--rule);
+  color: var(--muted);
+}
+
+/* ── CONTACT CTA ── */
+.contact-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 56px;
+  border-left: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.contact-section h2 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.contact-section h2 em { font-style: italic; color: var(--orange); }
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  font-weight: 300;
+  padding: 14px 16px;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: none;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder { color: var(--muted); }
+
+.contact-form input:focus,
+.contact-form textarea:focus { border-color: var(--orange); }
+
+.contact-form button {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  padding: 16px 28px;
+  border: none;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background 0.2s, transform 0.15s;
+  text-transform: uppercase;
+}
+
+.contact-form button:hover {
+  background: var(--orange);
+  transform: translateY(-1px);
+}
+
+.contact-alt {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.contact-alt span {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.contact-alt a {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--orange);
+  text-decoration: none;
+}
+
+.contact-alt a:hover { text-decoration: underline; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 28px 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+footer p {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-links a {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--orange); }
+
+/* ── MILESTONES ── */
+.milestone-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--rule);
+}
+
+.milestone {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 32px;
+  padding: 28px 32px;
+  border-bottom: 1px solid var(--rule);
+  align-items: start;
+  transition: background 0.2s;
+}
+
+.milestone:last-child { border-bottom: none; }
+.milestone:hover { background: var(--orange-light); }
+
+.milestone-step {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--orange);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding-top: 3px;
+}
+
+.milestone h3 {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 0.97rem;
+  margin-bottom: 4px;
+}
+
+.milestone p {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* ── REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-links { gap: 16px; }
+  .nav-links a:not(.nav-contact) { display: none; }
+  .hero, .section { padding: 100px 20px 60px; }
+  h1 { font-size: 3rem; }
+  .hero-body { grid-template-columns: 1fr; gap: 40px; }
+  .section-header { grid-template-columns: 1fr; gap: 8px; }
+  .problem-grid { grid-template-columns: 1fr; }
+  .problem-item { border-right: none; border-bottom: 1px solid var(--rule); }
+  .problem-item:last-child { border-bottom: none; }
+  .callout { padding: 40px 20px; }
+  .callout-inner { grid-template-columns: 1fr; gap: 40px; }
+  .traction-row { grid-template-columns: 1fr; }
+  .model-grid { grid-template-columns: 1fr; }
+  .why-grid { grid-template-columns: 1fr; }
+  .ask-grid { grid-template-columns: 1fr; }
+  .contact-section { grid-template-columns: 1fr; gap: 40px; padding: 60px 20px; }
+  .founder-inner { grid-template-columns: 1fr; gap: 32px; padding: 60px 20px; }
+  .milestone { grid-template-columns: 60px 1fr; gap: 16px; padding: 20px; }
+  footer { padding: 24px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">ZTEEL<span class="logo-dot">.</span></a>
+  <div class="nav-links">
+    <a href="#problem">Problem</a>
+    <a href="#traction">Traction</a>
+    <a href="#model">Model</a>
+    <a href="#ask">The Ask</a>
+    <a href="#contact" class="nav-contact">Request Deck →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">
+    <div class="eyebrow-line"></div>
+    <span class="eyebrow-text">Investor Overview — 2025</span>
+  </div>
+  <h1>The <em>demand engine</em><br>for offline commerce</h1>
+  <div class="hero-body">
+    <p class="hero-desc">
+      Zteeel is a <strong>hyper-local revenue optimization platform</strong> that helps India's millions of offline small businesses turn predictable slow hours into walk-in revenue — through real-time proximity deals, zero delivery overhead, and intelligent upselling.
+      <br><br>
+      We are seeking early-stage incubation, mentorship, and pilot funding.
+    </p>
+    <div class="hero-metrics">
+      <div class="metric">
+        <div class="metric-val">₹<span>400</span></div>
+        <div class="metric-label">Base subscription/mo</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val"><span>0</span>%</div>
+        <div class="metric-label">Commission on sales</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">10<span>K</span></div>
+        <div class="metric-label">Pilot vendor target</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">₹<span>8M</span></div>
+        <div class="metric-label">MRR potential at 10K</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="full-rule">
+
+<!-- PROBLEM -->
+<div id="problem" class="section reveal">
+  <div class="section-header">
+    <span class="section-num">01 — The Problem</span>
+    <h2 class="section-title">Every small business in India loses money to <em>slow hours</em></h2>
+  </div>
+  <div class="problem-grid">
+    <div class="problem-item">
+      <div class="problem-num">P.01</div>
+      <h3>Predictable Dead Zones</h3>
+      <p>Mid-morning, post-lunch, late afternoon — the same hours bleed revenue every single day. No affordable real-time tool exists to convert that idle capacity.</p>
+    </div>
+    <div class="problem-item">
+      <div class="problem-num">P.02</div>
+      <h3>Perishable Inventory Loss</h3>
+      <p>Unsold food, fresh produce, daily stock — when it doesn't move, it's a direct loss. Vendors need a fast, low-friction channel to clear inventory before close.</p>
+    </div>
+    <div class="problem-item">
+      <div class="problem-num">P.03</div>
+      <h3>No Affordable Local Marketing</h3>
+      <p>Social ads reach the wrong geography. Delivery platforms charge 15–30% commission. The walk-in customer — who costs nothing to serve — has no discovery layer.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="full-rule">
+
+<!-- CALLOUT -->
+<div class="callout reveal">
+  <div class="callout-inner">
+    <h2>A massive market hiding in plain sight — <em>millions of offline SMBs</em> with no real-time demand tools</h2>
+    <div class="callout-stats">
+      <div class="callout-stat">
+        <div class="callout-stat-val">63M+</div>
+        <div class="callout-stat-label">MSMEs in India, majority offline-first</div>
+      </div>
+      <div class="callout-stat">
+        <div class="callout-stat-val">₹400–800</div>
+        <div class="callout-stat-label">Monthly willingness-to-pay validated via vendor interviews</div>
+      </div>
+      <div class="callout-stat">
+        <div class="callout-stat-val">15–30%</div>
+        <div class="callout-stat-label">Delivery platform commission — the pain we eliminate</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRACTION -->
+<div id="traction" class="section reveal">
+  <div class="section-header">
+    <span class="section-num">02 — Early Traction</span>
+    <h2 class="section-title">Validated with real vendor conversations, not assumptions</h2>
+  </div>
+  <div class="traction-row">
+    <div class="traction-cell">
+      <div class="traction-big">50+</div>
+      <div class="traction-label">Vendor interviews</div>
+      <p class="traction-desc">Direct conversations with local food vendors, cafes, and small retailers across urban India confirmed the slow-hour revenue problem is universal and painful.</p>
+    </div>
+    <div class="traction-cell">
+      <div class="traction-big">85%</div>
+      <div class="traction-label">Expressed interest</div>
+      <p class="traction-desc">Of vendors interviewed showed willingness to pay ₹400–800/month for a platform that demonstrably drives walk-in traffic during slow periods.</p>
+    </div>
+    <div class="traction-cell">
+      <div class="traction-big">10K+</div>
+      <div class="traction-label">Pilot target identified</div>
+      <p class="traction-desc">High-density neighborhoods in major Indian cities scoped for initial rollout, with vendor cluster strategy mapped to build strong local supply-demand loops.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="full-rule">
+
+<!-- BUSINESS MODEL -->
+<div id="model" class="section reveal">
+  <div class="section-header">
+    <span class="section-num">03 — Business Model</span>
+    <h2 class="section-title">Subscription-first. <em>No commissions.</em> Scalable unit economics.</h2>
+  </div>
+  <div class="model-grid">
+    <div class="model-main">
+      <div class="section-num" style="margin-bottom:8px">Primary Revenue Stream</div>
+      <div class="price">₹400–800 <span>/ mo</span></div>
+      <p>Flat monthly subscription per vendor. No transaction fees, no delivery cut, no complexity. Vendors see immediate ROI from increased foot traffic — making churn naturally low.</p>
+      <br>
+      <p style="font-size:0.82rem;color:var(--muted);">At 10,000 vendors at blended ₹600/month average → <strong style="color:var(--ink)">₹6M monthly recurring revenue</strong>. At 50,000 vendors → ₹30M MRR.</p>
+    </div>
+    <div class="model-aside">
+      <h4>Additional Revenue Streams</h4>
+      <div class="stream">
+        <span class="stream-arrow">→</span>
+        <div class="stream-body">
+          <strong>Featured Listings</strong>
+          <p>Premium placement at top of customer discovery feed for higher visibility.</p>
+        </div>
+      </div>
+      <div class="stream">
+        <span class="stream-arrow">→</span>
+        <div class="stream-body">
+          <strong>Promotional Boosts</strong>
+          <p>Campaign support for seasonal events, festivals, and local promotions.</p>
+        </div>
+      </div>
+      <div class="stream">
+        <span class="stream-arrow">→</span>
+        <div class="stream-body">
+          <strong>Vendor Analytics</strong>
+          <p>Advanced demand pattern reporting and footfall insights as a premium add-on.</p>
+        </div>
+      </div>
+      <div class="stream">
+        <span class="stream-arrow">→</span>
+        <div class="stream-body">
+          <strong>Data Licensing</strong>
+          <p>Anonymised hyper-local demand intelligence for FMCG, real estate, and retail brands — long-term.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="full-rule">
+
+<!-- WHY NOW -->
+<div class="section reveal">
+  <div class="section-header">
+    <span class="section-num">04 — Why Now</span>
+    <h2 class="section-title">Four structural forces converging at once</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-item">
+      <div class="why-tag">Enabling Force 01</div>
+      <h3>UPI at Massive Scale</h3>
+      <p>India's UPI infrastructure enables frictionless in-store payments with near-zero cost. The payment layer that makes instant offer redemption seamless is already in every Indian's pocket.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-tag">Enabling Force 02</div>
+      <h3>Smartphone Penetration in Urban India</h3>
+      <p>Mobile-first behaviour is now default across urban SMB owners and their customers. A proximity-based discovery platform is viable at scale in ways it wasn't three years ago.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-tag">Enabling Force 03</div>
+      <h3>Delivery Platform Fatigue</h3>
+      <p>Rising commissions and dependency on Swiggy/Zomato are pushing vendors to seek direct customer relationships. Zteeel is positioned as the affordable, commission-free alternative for walk-in revenue.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-tag">Enabling Force 04</div>
+      <h3>No Direct Competitor in This Space</h3>
+      <p>Food aggregators serve delivery. Coupon platforms serve static deals. Social ads serve awareness. Nobody is building real-time, proximity-first, walk-in revenue tooling for offline SMBs.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="full-rule">
+
+<!-- COMPETITIVE -->
+<div class="section reveal">
+  <div class="section-header">
+    <span class="section-num">05 — Competitive Position</span>
+    <h2 class="section-title">A unique position — not competing, <em>creating a category</em></h2>
+  </div>
+  <table class="moat-table">
+    <thead>
+      <tr>
+        <th>Platform</th>
+        <th>Walk-in Focus</th>
+        <th>Real-Time Offers</th>
+        <th>Proximity Targeting</th>
+        <th>Commission Model</th>
+        <th>Upselling Engine</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Zteeel</strong></td>
+        <td class="ours">✓ Core focus</td>
+        <td class="ours">✓ Native</td>
+        <td class="ours">✓ Proximity-first</td>
+        <td class="ours">₹0 / flat sub</td>
+        <td class="ours">✓ AI-powered</td>
+      </tr>
+      <tr>
+        <td>Swiggy / Zomato</td>
+        <td class="theirs">✗ Delivery only</td>
+        <td class="theirs">Partial</td>
+        <td class="theirs">✗ City-wide</td>
+        <td class="theirs">15–30% per order</td>
+        <td class="theirs">Limited</td>
+      </tr>
+      <tr>
+        <td>Coupon Platforms</td>
+        <td class="theirs">Partial</td>
+        <td class="theirs">✗ Static</td>
+        <td class="theirs">✗ None</td>
+        <td class="theirs">Revenue share</td>
+        <td class="theirs">✗ None</td>
+      </tr>
+      <tr>
+        <td>Social Media Ads</td>
+        <td class="theirs">✗ Awareness only</td>
+        <td class="theirs">Manual</td>
+        <td class="theirs">✗ Broad geo</td>
+        <td class="theirs">CPM / CPC</td>
+        <td class="theirs">✗ None</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<hr class="full-rule">
+
+<!-- MILESTONES -->
+<div class="section reveal">
+  <div class="section-header">
+    <span class="section-num">06 — Roadmap</span>
+    <h2 class="section-title">Clear milestones, <em>measurable outcomes</em></h2>
+  </div>
+  <div class="milestone-list">
+    <div class="milestone">
+      <span class="milestone-step">Phase 01</span>
+      <div>
+        <h3>Launch Pilot — 100 Vendors</h3>
+        <p>Deploy in 2 high-density neighbourhoods. Measure redemption rate, average order value lift, and vendor retention at 30 and 60 days.</p>
+      </div>
+    </div>
+    <div class="milestone">
+      <span class="milestone-step">Phase 02</span>
+      <div>
+        <h3>Validate Product-Market Fit</h3>
+        <p>Achieve >40% redemption rate on offers and >15% AOV lift for active vendors. Use data to refine proximity radius and offer timing engine.</p>
+      </div>
+    </div>
+    <div class="milestone">
+      <span class="milestone-step">Phase 03</span>
+      <div>
+        <h3>Scale to 1,000 Vendors</h3>
+        <p>Expand to 3–5 cities using cluster onboarding with local vendor associations. Activate referral program. Begin building the data moat.</p>
+      </div>
+    </div>
+    <div class="milestone">
+      <span class="milestone-step">Phase 04</span>
+      <div>
+        <h3>10,000 Vendors — Series A Ready</h3>
+        <p>Proven unit economics across multiple cities. Predictable MRR, low churn, and a proprietary demand dataset with defensible competitive moat.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="full-rule">
+
+<!-- ASK -->
+<div id="ask" class="section reveal">
+  <div class="section-header">
+    <span class="section-num">07 — The Ask</span>
+    <h2 class="section-title">We are looking for more than <em>capital</em></h2>
+  </div>
+  <div class="ask-grid">
+    <div class="ask-item">
+      <h3>Incubation &amp; Mentorship</h3>
+      <p>Access to an ecosystem of experienced founders and operators who have scaled consumer platforms in India. Strategic guidance on go-to-market, unit economics, and hiring for the pilot phase.</p>
+    </div>
+    <div class="ask-item">
+      <h3>Pilot Partnerships</h3>
+      <p>Introductions to local vendor associations, neighbourhood business communities, and early-adopter networks that can accelerate our first 100 vendor onboardings.</p>
+    </div>
+    <div class="ask-item">
+      <h3>Early-Stage Funding</h3>
+      <p>Seed capital to fund product development, vendor onboarding operations, and pilot expansion. Funds deployed against measurable milestones with clear proof points before each tranche.</p>
+    </div>
+    <div class="ask-item" style="background:var(--orange-light);border:1px solid rgba(232,74,0,0.2);">
+      <h3>Why Now &amp; Why Us</h3>
+      <p>This is a founder with deep context on the problem, validated demand evidence, and the technical ability to build. The window to own this category in India is open — and narrowing. We want partners who move with conviction.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="full-rule">
+
+<!-- FOUNDER -->
+<div class="founder-section reveal">
+  <div class="founder-inner">
+    <div>
+      <div class="founder-label">The Founder</div>
+      <div class="founder-name">Joel Joby</div>
+      <div class="founder-title">Founder &amp; Builder, Zteeel</div>
+    </div>
+    <div>
+      <p class="founder-bio">
+        B.Tech Computer Science student with hands-on experience in <strong>full-stack product development and rapid prototyping</strong>. Currently building Zteeel and Zteeel Ledger — a companion accounting product for Indian SMBs — simultaneously, demonstrating the ability to execute across a product suite independently.
+        <br><br>
+        Deep contextual understanding of small business markets through <strong>50+ direct vendor conversations</strong>. Passionate about building the commerce infrastructure that India's offline economy needs but doesn't yet have.
+      </p>
+      <div class="competencies">
+        <span class="chip">Product Strategy</span>
+        <span class="chip">Full-Stack Engineering</span>
+        <span class="chip">SMB Market Research</span>
+        <span class="chip">Rapid Prototyping</span>
+        <span class="chip">Go-To-Market Thinking</span>
+        <span class="chip">India Commerce Context</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="contact-section reveal">
+  <div>
+    <h2>Let's have a <em>real conversation</em></h2>
+    <p style="color:var(--muted);margin-top:16px;font-size:0.95rem;line-height:1.7;">
+      If you're an investor, incubator, or accelerator interested in the offline commerce space in India, we'd love to share the full deck and walk you through the product vision.
+    </p>
+    <div class="contact-alt" style="margin-top:32px;">
+      <span>Or email directly:</span>
+      <a href="mailto:joeljoby999@gmail.com">joeljoby999@gmail.com</a>
+    </div>
+  </div>
+  <div class="contact-form" id="contactForm">
+    <input type="text" id="cName" placeholder="Your name / fund name" autocomplete="name">
+    <input type="email" id="cEmail" placeholder="Email address" autocomplete="email">
+    <textarea id="cMsg" rows="4" placeholder="Brief note — what you're looking for, your thesis, etc."></textarea>
+    <button onclick="submitContact()">Send Message →</button>
+    <div id="contactSuccess" style="display:none;font-family:var(--mono);font-size:0.82rem;color:var(--orange);padding:12px 0;">✓ Message received. We'll be in touch shortly.</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="logo">ZTEEL<span class="logo-dot">.</span></span>
+  <p>© 2025 Zteeel — Confidential Investor Overview</p>
+  <div class="footer-links">
+    <a href="mailto:joeljoby999@gmail.com">Contact</a>
+    <a href="#">Download Deck</a>
+    <a href="#">Privacy</a>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Contact form
+  function submitContact() {
+    const name = document.getElementById('cName').value.trim();
+    const email = document.getElementById('cEmail').value.trim();
+    if (!name || !email || !email.includes('@')) return;
+    /
