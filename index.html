@@ -117,7 +117,7 @@ nav {
   align-items: center;
   gap: 12px;
   margin-bottom: 40px;
-  opacity: 0;
+  opacity: 1;
   animation: slideIn 0.5s 0.1s ease forwards;
 }
 
@@ -142,7 +142,7 @@ h1 {
   line-height: 1.0;
   letter-spacing: -0.02em;
   max-width: 800px;
-  opacity: 0;
+  opacity: 1;
   animation: slideIn 0.6s 0.2s ease forwards;
 }
 
@@ -157,7 +157,7 @@ h1 em {
   gap: 80px;
   margin-top: 56px;
   align-items: end;
-  opacity: 0;
+  opacity: 1;
   animation: slideIn 0.6s 0.35s ease forwards;
 }
 
@@ -211,7 +211,7 @@ h1 em {
 }
 
 @keyframes slideIn {
-  from { opacity: 0; transform: translateY(18px); }
+  from { opacity: 1; transform: translateY(18px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -843,8 +843,8 @@ footer p {
 
 /* ── REVEAL ── */
 .reveal {
-  opacity: 0;
-  transform: translateY(16px);
+  opacity: 1;
+  
   transition: opacity 0.55s ease, transform 0.55s ease;
 }
 
